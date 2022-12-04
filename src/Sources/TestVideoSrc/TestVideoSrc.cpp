@@ -1,5 +1,5 @@
-#include "Plugins/TestVideoSrc.hpp"
-#include "../../../include/ImageContainer/ImagePool.hpp"
+#include "TestVideoSrc.hpp"
+#include <FIPP/ImageContainer/ImagePool.hpp>
 
 #define PLUGIN_NAME "TestVideoSrc"
 

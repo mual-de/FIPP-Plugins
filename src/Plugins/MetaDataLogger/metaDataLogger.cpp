@@ -1,4 +1,4 @@
-#include "Plugins/MetaDataLogger.hpp"
+#include "MetaDataLogger.hpp"
 #include <string.h>
 using namespace FIPP;
 using namespace FIPP::plugins;

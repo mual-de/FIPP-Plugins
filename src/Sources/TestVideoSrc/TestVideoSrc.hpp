@@ -1,7 +1,8 @@
 #ifndef __TEST_VIDEO_SRC_HPP__
 #define __TEST_VIDEO_SRC_HPP__
-#include "../PipelineElements/GenericSource.hpp"
-#include "../ImageContainer/ImageContainer.hpp"
+
+#include <FIPP/PipelineElements/GenericSource.hpp>
+#include <FIPP/ImageContainer/ImageContainer.hpp>
 #include <yaml-cpp/yaml.h>
 class TestVideoSrc : public FIPP::pipe::GenericSource
 {

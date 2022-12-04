@@ -1,9 +1,10 @@
 find_package(GTest REQUIRED)
-
-add_subdirectory(Point)
-add_subdirectory(ImageContainer)
+set(Point_DIR "/usr/local/lib/cmake/FIPP/Point")
+set(ImageContainer_DIR "/usr/local/lib/cmake/FIPP/ImageContainer")
+find_package(Point CONFIG REQUIRED)
+find_package(ImageContainer CONFIG REQUIRED)
 add_subdirectory(Plugins)
-add_subdirectory(MetaDataSystem)
+
 function(do_test target result)
   add_test(NAME ${target}_test COMMAND ${target})
   set_tests_properties(${target}_test

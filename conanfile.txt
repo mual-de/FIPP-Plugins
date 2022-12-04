@@ -1,0 +1,7 @@
+[requires]
+gtest/1.11.0
+yaml-cpp/0.7.0
+
+[generators]
+cmake_find_package
+virtualenv

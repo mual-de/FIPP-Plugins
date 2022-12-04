@@ -1,7 +1,8 @@
 #ifndef __RGB2GRAY_CONVERTER_HPP__
 #define __RGB2GRAY_CONVERTER_HPP__
-#include "../PipelineElements/GenericPluginSiSo.hpp"
-#include "../PipelineElements/IGenericPipelineElement.hpp"
+#include <FIPP/PipelineElements/GenericPluginSiSo.hpp>
+#include <FIPP/PipelineElements/IGenericPipelineElement.hpp>
+#include <FIPP/Point.hpp>
 #include <yaml-cpp/yaml.h>
 
 namespace FIPP
