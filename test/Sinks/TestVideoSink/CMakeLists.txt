@@ -1,5 +1,5 @@
-add_executable(MetaDataLoggerTest
-    MetaDataLoggerTest.cpp
+add_executable(TestVideoSinkTest
+TestVideoSinkTest.cpp
 )
 find_package(yaml-cpp)
 set(PipelineElements_DIR "/usr/local/lib/cmake/FIPP/PipelineElements")
@@ -11,11 +11,21 @@ find_library(LOGGING_LIBRARY Logging HINTS /usr/local/lib/FIPP)
 set(Point_DIR "/usr/local/lib/cmake/FIPP/Point")
 find_library(POINT_LIBRARY Point HINTS /usr/local/lib/FIPP)
 
-target_include_directories(MetaDataLoggerTest PUBLIC "/usr/local/include/FIPP")
+find_package( OpenCV REQUIRED )
+include_directories( ${OpenCV_INCLUDE_DIRS} )
 
-target_link_libraries(MetaDataLoggerTest PUBLIC MetaDataLogger GTest::GTest yaml-cpp ${PIPELINEELEMENTS_LIBRARY} ${IMAGECONTAINER_LIBRARY} ${LOGGING_LIBRARY} ${POINT_LIBRARY})
+target_include_directories(TestVideoSinkTest PUBLIC "/usr/local/include/FIPP")
+
+target_link_libraries(TestVideoSinkTest
+    PRIVATE
+    TestVideoSink
+    GTest::GTest
+    yaml-cpp
+    ${OpenCV_LIBS}
+    ${PIPELINEELEMENTS_LIBRARY} ${IMAGECONTAINER_LIBRARY} ${LOGGING_LIBRARY} ${POINT_LIBRARY}
+)
 
 add_test(
-    NAME MetaDataLoggerTest
-    COMMAND MetaDataLoggerTest
+    NAME TestVideoSinkTest
+    COMMAND TestVideoSinkTest
 )
