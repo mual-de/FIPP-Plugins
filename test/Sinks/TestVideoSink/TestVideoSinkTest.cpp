@@ -2,6 +2,7 @@
 #include <yaml-cpp/yaml.h>
 #include <memory>
 #include "../../../src/Sinks/TestVideoSink/TestVideoSink.hpp"
+
 #include "Logging/ILogging.hpp"
 #include "Logging/UnitTestLogger.hpp"
 #include "Logging/TestLogger.hpp"

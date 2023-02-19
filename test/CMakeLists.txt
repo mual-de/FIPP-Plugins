@@ -6,6 +6,7 @@ find_package(ImageContainer CONFIG REQUIRED)
 add_subdirectory(Plugins)
 add_subdirectory(Sources)
 add_subdirectory(Sinks)
+add_subdirectory(Pipeline)
 
 function(do_test target result)
   add_test(NAME ${target}_test COMMAND ${target})

@@ -45,7 +45,18 @@ TEST(Creation, bounding)
     format.bitDepthPerPixel=8;
     format.bytesPerPixel = 1;
     format.imgType = img::ImageType::GRAY;
-    YAML::Node node = YAML::Load("[1, 2, 3]");
+    YAML::Node node;
+    node["name"] = "TestVideoSrc";
+    YAML::Node imgConfig;
+    YAML::Node dimensions;
+    dimensions["x"] = 1024;
+    dimensions["y"] = 768;
+    imgConfig["dimensions"] = dimensions;
+    imgConfig["bitDepthPerPixel"] = 8;
+    imgConfig["bytesPerPixel"] = 1;
+    imgConfig["imgType"] = "GRAY";
+    imgConfig["backendType"] = "CPU";
+    node["imgConfig"] = imgConfig;
     std::shared_ptr<img::ImageContainer> pImg = std::make_shared<img::ImageContainerCPU>(size, format,0);
     std::shared_ptr<logging::ILogger> log = std::make_shared<logging::UnitTestLogger>(logging::LogLevel::INFO);
     std::shared_ptr<pipe::IGenericSource> pe = std::make_shared<plugins::TestVideoSrc>(node, 1, log);
@@ -60,6 +71,10 @@ TEST(Creation, bounding)
     while(pe->getState() != pipe::ElementState::RUNNING){};
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
     pe->stopElement();
+    std::vector<logging::UnitTestEntry> entries = std::static_pointer_cast<logging::UnitTestLogger>(log)->getEntries();
+    for(auto e: entries){
+        std::cout << e.fName << " " << e.fnName << " " << e.frameNumber << " " << e.msg << " " << std::endl;
+    }
     
 }
 
