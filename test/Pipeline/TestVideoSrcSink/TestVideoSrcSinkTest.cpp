@@ -1,3 +1,4 @@
+#define TEST_MODE 1
 #include <gtest/gtest.h>
 #include <yaml-cpp/yaml.h>
 #include <memory>

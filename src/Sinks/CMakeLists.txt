@@ -1,1 +1,2 @@
+add_subdirectory(ImageExporter)
 add_subdirectory(TestVideoSink)

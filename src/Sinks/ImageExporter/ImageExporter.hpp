@@ -6,26 +6,27 @@
 #include <ctime>
 namespace FIPP::plugins
 {
-    class TestVideoSink : public FIPP::pipe::GenericSinkSi
+    class ImageExporter : public FIPP::pipe::GenericSinkSi
     {
     public:
-        TestVideoSink(YAML::Node config, int elemId, std::shared_ptr<FIPP::logging::ILogger> log);
+        ImageExporter(YAML::Node config, int elemId, std::shared_ptr<FIPP::logging::ILogger> log);
 
     private:
         void closeInterfaces();
         void initializeInterfaces();
         void doCalculation(std::shared_ptr<img::ImageContainer> img);
-        bool m_enableCounter;
+        void exportCpuImages(std::shared_ptr<img::ImageContainer> img);
         unsigned long long int m_frameNumber;
-        std::time_t m_lastTS;
+        std::string m_storagePath;
+        std::string m_filePrefix;
+        std::string m_fileFormat;
     };
 
 };
-
 extern "C"
 {
     /**
-     * @brief Create a pipeline element of type TestVideoSink
+     * @brief Create a pipeline element of type ImageExporter
      * 
      * @param pipeElemPtr shared ptr to store the pipeline element after creation
      * @param config yaml configuration of this pipeline element
@@ -35,14 +36,14 @@ extern "C"
      */
     void makePipeElement(std::shared_ptr<FIPP::pipe::IGenericPipelineElement>& pipeElemPtr, YAML::Node config, std::string elementName, int elemId, std::shared_ptr<FIPP::logging::ILogger> log)
     {
-        pipeElemPtr = std::make_shared<FIPP::plugins::TestVideoSink>(config, elemId, log);
+        pipeElemPtr = std::make_shared<FIPP::plugins::ImageExporter>(config, elemId, log);
     }
     /**
      * @brief Get the Element Identifier object
      * 
      * @param id string variable to store the element identifier
      */
-    void getElementIdentifier(std::string &id) { id = std::string("TestVideoSink"); };
+    void getElementIdentifier(std::string &id) { id = std::string("ImageExporter"); };
     /**
      * @brief Get the Element Type object
      * 

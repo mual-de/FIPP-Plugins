@@ -1,4 +1,4 @@
-add_library(TestVideoSink SHARED TestVideoSink.cpp)
+add_library(ImageExporter SHARED ImageExporter.cpp)
 
 find_package(yaml-cpp)
 set(PipelineElements_DIR "/usr/local/lib/cmake/FIPP/PipelineElements")
@@ -14,8 +14,8 @@ find_library(POINT_LIBRARY Point HINTS /usr/local/lib/FIPP)
 find_package( OpenCV REQUIRED )
 include_directories( ${OpenCV_INCLUDE_DIRS} )
 
-target_link_libraries(TestVideoSink PRIVATE yaml-cpp ${PIPELINEELEMENTS_LIBRARY} ${IMAGECONTAINER_LIBRARY} ${POINT_LIBRARY} ${LOGGING_LIBRARY} ${OpenCV_LIBS})
+target_link_libraries(ImageExporter PRIVATE yaml-cpp ${PIPELINEELEMENTS_LIBRARY} ${IMAGECONTAINER_LIBRARY} ${POINT_LIBRARY} ${LOGGING_LIBRARY} ${OpenCV_LIBS})
 
-install(TARGETS TestVideoSink 
+install(TARGETS ImageExporter 
             RUNTIME DESTINATION bin/FIPP-Plugins
             LIBRARY DESTINATION lib/FIPP-Plugins)

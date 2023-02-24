@@ -18,15 +18,34 @@ namespace FIPP
                 std::shared_ptr<img::ImageContainer> doCalculation(std::shared_ptr<img::ImageContainer> img);
         };
 
-        class MetaDatLoggerFactory : public pipe::IGenericPipelineElementFactory{
-            public:
-                std::shared_ptr<pipe::IGenericPipelineElement> makePipeElement(YAML::Node config, std::string elementName, int elemId, std::shared_ptr<FIPP::logging::ILogger> log){
-                    return std::make_shared<MetaDataLogger>(config, elemId, log);
-                }
-                std::string getElementIdentifier(){return std::string("MetaDataLogger");};
-                pipe::ElementTypes getElementType(){return pipe::ElementTypes::PLUGIN;};
-        };
-
     }
+}
+extern "C"
+{
+    /**
+     * @brief Create a pipeline element of type MetaDataLogger
+     * 
+     * @param pipeElemPtr shared ptr to store the pipeline element after creation
+     * @param config yaml configuration of this pipeline element
+     * @param elementName special name of this pipeline element
+     * @param elemId unique id of this element
+     * @param log shared pointer to logger to store the needed information.
+     */
+    void makePipeElement(std::shared_ptr<FIPP::pipe::IGenericPipelineElement>& pipeElemPtr, YAML::Node config, std::string elementName, int elemId, std::shared_ptr<FIPP::logging::ILogger> log)
+    {
+        pipeElemPtr = std::make_shared<FIPP::plugins::MetaDataLogger>(config, elemId, log);
+    }
+    /**
+     * @brief Get the Element Identifier object
+     * 
+     * @param id string variable to store the element identifier
+     */
+    void getElementIdentifier(std::string &id) { id = std::string("MetaDataLogger"); };
+    /**
+     * @brief Get the Element Type object
+     * 
+     * @param type variable to store the element type
+     */
+    void getElementType(FIPP::pipe::ElementTypes &type) { type = FIPP::pipe::ElementTypes::PLUGIN; };
 }
 #endif
