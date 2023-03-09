@@ -20,14 +20,6 @@ namespace fs = filesystem;
 
 typedef void (*makePipeElement_t)(std::shared_ptr<FIPP::pipe::IGenericPipelineElement> & pipeElemPtr, YAML::Node config, std::string elementName, int elemId, std::shared_ptr<FIPP::logging::ILogger> log);
 
-void openDependencies()
-{
-    void *handle = dlopen("/usr/local/lib/FIPP/libPoint.so", RTLD_NOW | RTLD_GLOBAL);
-    if (!handle)
-    {
-        cerr << "Cannot open library: " << dlerror() << '\n';
-    }
-}
 void getAllPluginsInFolder(string path, map<string, makePipeElement_t*> &plugins)
 {
     for (const auto &entry : fs::directory_iterator(path))

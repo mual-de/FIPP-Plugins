@@ -1,3 +1,13 @@
+/**
+ * @file TestVideoSrc.hpp
+ * @author Alexander Mueller (dev@alexandermaxmueller.de)
+ * @brief A small TestVideoSrc to create test images (GPU and CPU)
+ * @version 0.1
+ * @date 2023-03-07
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
 #ifndef __TEST_VIDEO_SRC_HPP__
 #define __TEST_VIDEO_SRC_HPP__
 
@@ -23,7 +33,26 @@ namespace FIPP
             void createTestPatternGrayCpu(std::shared_ptr<FIPP::img::ImageContainer> img);
             FIPP::img::ImageContainerConfig m_imgConfig;
             int m_radius;
+            /**
+             * @brief Image center point
+             * 
+             */
             cv::Point m_cCenter;
+            /**
+             * @brief check if cuda backend should be used.
+             * 
+             */
+            bool m_enableCuda;
+            /**
+             * @brief GPU accessable buffer for demo img
+             * 
+             */
+            uchar* m_gpuBuffer;
+            /**
+             * @brief CPU accessable bufffer for demo img
+             * 
+             */
+            uchar* m_cpuBuffer;
         };
 
         

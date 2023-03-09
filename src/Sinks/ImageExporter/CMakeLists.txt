@@ -9,12 +9,12 @@ set(Logging_DIR "/usr/local/lib/cmake/FIPP/Logging")
 find_library(LOGGING_LIBRARY Logging HINTS /usr/local/lib/FIPP)
 set(Point_DIR "/usr/local/lib/cmake/FIPP/Point")
 find_library(POINT_LIBRARY Point HINTS /usr/local/lib/FIPP)
-
+find_package(CUDAToolkit REQUIRED)
 
 find_package( OpenCV REQUIRED )
 include_directories( ${OpenCV_INCLUDE_DIRS} )
 
-target_link_libraries(ImageExporter PRIVATE yaml-cpp ${PIPELINEELEMENTS_LIBRARY} ${IMAGECONTAINER_LIBRARY} ${POINT_LIBRARY} ${LOGGING_LIBRARY} ${OpenCV_LIBS})
+target_link_libraries(ImageExporter PRIVATE yaml-cpp CUDA::cudart CUDA::cuda_driver ${PIPELINEELEMENTS_LIBRARY} ${IMAGECONTAINER_LIBRARY} ${POINT_LIBRARY} ${LOGGING_LIBRARY} ${OpenCV_LIBS})
 
 install(TARGETS ImageExporter 
             RUNTIME DESTINATION bin/FIPP-Plugins

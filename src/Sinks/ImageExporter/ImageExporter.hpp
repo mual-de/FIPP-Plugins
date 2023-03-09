@@ -16,6 +16,7 @@ namespace FIPP::plugins
         void initializeInterfaces();
         void doCalculation(std::shared_ptr<img::ImageContainer> img);
         void exportCpuImages(std::shared_ptr<img::ImageContainer> img);
+        void exportGpuImages(std::shared_ptr<img::ImageContainer> img);
         unsigned long long int m_frameNumber;
         std::string m_storagePath;
         std::string m_filePrefix;
