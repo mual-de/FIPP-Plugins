@@ -28,9 +28,12 @@ namespace FIPP
             void doCalculation(std::shared_ptr<FIPP::img::ImageContainer> img);
             void initializeInterfaces();
             void closeInterfaces();
-
-            void createTestPatternRGBCpu(std::shared_ptr<FIPP::img::ImageContainer> img);
-            void createTestPatternGrayCpu(std::shared_ptr<FIPP::img::ImageContainer> img);
+            void createInitialPattern();
+            void createInitialPatternGray();
+            void createInitialPatternRGB();
+            void createInitialPatternRGBA();
+            void createTestPatternRGB();
+            void createTestPatternGray();
             FIPP::img::ImageContainerConfig m_imgConfig;
             int m_radius;
             /**
@@ -44,15 +47,11 @@ namespace FIPP
              */
             bool m_enableCuda;
             /**
-             * @brief GPU accessable buffer for demo img
+             * @brief Depending on configuration cpu/gpu accessable buffer for demo img
              * 
              */
-            uchar* m_gpuBuffer;
-            /**
-             * @brief CPU accessable bufffer for demo img
-             * 
-             */
-            uchar* m_cpuBuffer;
+            unsigned char* m_buffer;
+            unsigned char* m_outBuffer;
         };
 
         

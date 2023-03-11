@@ -13,9 +13,9 @@ find_library(POINT_LIBRARY Point HINTS /usr/local/lib/FIPP)
 
 find_package( OpenCV REQUIRED )
 include_directories( ${OpenCV_INCLUDE_DIRS} )
-
-target_link_libraries(TestVideoSrc PRIVATE yaml-cpp ${PIPELINEELEMENTS_LIBRARY} ${IMAGECONTAINER_LIBRARY} ${POINT_LIBRARY} ${LOGGING_LIBRARY} ${OpenCV_LIBS})
-
+find_package(CUDAToolkit REQUIRED)
+target_link_libraries(TestVideoSrc PRIVATE ${PIPELINEELEMENTS_LIBRARY} ${IMAGECONTAINER_LIBRARY} ${POINT_LIBRARY} ${LOGGING_LIBRARY} ${OpenCV_LIBS})
+target_link_libraries(TestVideoSrc PUBLIC yaml-cpp CUDA::cudart CUDA::cuda_driver )
 install(TARGETS TestVideoSrc 
             RUNTIME DESTINATION bin/FIPP-Plugins
             LIBRARY DESTINATION lib/FIPP-Plugins)
