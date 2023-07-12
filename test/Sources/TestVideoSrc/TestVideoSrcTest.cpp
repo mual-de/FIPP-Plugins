@@ -6,9 +6,9 @@
 #include "Logging/UnitTestLogger.hpp"
 #include "Logging/TestLogger.hpp"
 #include "Point.hpp"
-#include "ImageContainer/ImageContainer.hpp"
-#include "ImageContainer/ImageContainerCPU.hpp"
-#include "ImageContainer/ImageFormat.hpp"
+#include <FIPP/ImageContainer/IImageContainer.hpp>
+#include <FIPP/ImageContainer/ImageFormat.hpp>
+#include <FIPP/ImageContainer/ImagePoolFactory.hpp>
 #include <iostream>
 #include <chrono>
 #include <thread>
@@ -27,8 +27,8 @@ TEST(Creation, basics)
     dimensions["y"] = 768;
     imgConfig["dimensions"] = dimensions;
     imgConfig["bitDepthPerPixel"] = 8;
-    imgConfig["bytesPerPixel"] = 1;
-    imgConfig["imgType"] = "GRAY";
+    imgConfig["bytesPerPixel"] = 3;
+    imgConfig["imgType"] = "RGB";
     imgConfig["backendType"] = "CPU";
     node["imgConfig"] = imgConfig;
     std::shared_ptr<logging::ILogger> log = std::make_shared<logging::UnitTestLogger>(logging::LogLevel::WARNING);
@@ -53,20 +53,15 @@ TEST(Creation, bounding)
     dimensions["y"] = 768;
     imgConfig["dimensions"] = dimensions;
     imgConfig["bitDepthPerPixel"] = 8;
-    imgConfig["bytesPerPixel"] = 1;
-    imgConfig["imgType"] = "GRAY";
+    imgConfig["bytesPerPixel"] = 3;
+    imgConfig["imgType"] = "RGB";
     imgConfig["backendType"] = "CPU";
     node["imgConfig"] = imgConfig;
-    std::shared_ptr<img::ImageContainer> pImg = std::make_shared<img::ImageContainerCPU>(size, format,0);
     std::shared_ptr<logging::ILogger> log = std::make_shared<logging::UnitTestLogger>(logging::LogLevel::INFO);
     std::shared_ptr<pipe::IGenericSource> pe = std::make_shared<plugins::TestVideoSrc>(node, 1, log);
     std::cout << "connected predecessor" << std::endl;
     img::ImageContainerConfig conf;
     conf.imgFormat = format;
-    img::Backend back;
-    back.flags = img::BackendFlags::CPU_ONLY;
-    back.type = img::BackendType::CPU;
-    conf.backend = back;
     bool res = pe->startElement(0);
     while(pe->getState() != pipe::ElementState::RUNNING){};
     std::this_thread::sleep_for(std::chrono::milliseconds(100));

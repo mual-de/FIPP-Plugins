@@ -14,7 +14,7 @@ namespace FIPP::plugins
     private:
         void closeInterfaces();
         void initializeInterfaces();
-        void doCalculation(std::shared_ptr<img::ImageContainer> img);
+        void doCalculation(std::shared_ptr<img::IImageContainer> img);
         bool m_enableCounter;
         unsigned long long int m_frameNumber;
         std::time_t m_lastTS;

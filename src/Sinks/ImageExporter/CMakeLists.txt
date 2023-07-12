@@ -7,8 +7,6 @@ set(ImageContainer_DIR "/usr/local/lib/cmake/FIPP/ImageContainer")
 find_library(IMAGECONTAINER_LIBRARY ImageContainer HINTS /usr/local/lib/FIPP)
 set(Logging_DIR "/usr/local/lib/cmake/FIPP/Logging")
 find_library(LOGGING_LIBRARY Logging HINTS /usr/local/lib/FIPP)
-set(Point_DIR "/usr/local/lib/cmake/FIPP/Point")
-find_library(POINT_LIBRARY Point HINTS /usr/local/lib/FIPP)
 find_package(CUDAToolkit REQUIRED)
 
 find_package( OpenCV REQUIRED )

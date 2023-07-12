@@ -1,8 +1,10 @@
 #include "TestVideoSink.hpp"
 #include <FIPP/Logging/ILogging.hpp>
+#include <FIPP/ImageContainer/ImageFormat.hpp>
+#include <FIPP/ImageContainer/IImageContainer.hpp>
 using namespace FIPP;
 using namespace FIPP::plugins;
-#include <FIPP/ImageContainer/ImageFormat.hpp>
+
 
 TestVideoSink::TestVideoSink(YAML::Node config, int elemId, std::shared_ptr<FIPP::logging::ILogger> log) : GenericSinkSi(config["name"].as<std::string>(), elemId, log)
 {
@@ -23,7 +25,7 @@ void TestVideoSink::initializeInterfaces(){
     LOG(logging::CONFIG, "Initialize uneeded interfaces!");
 }
 
-void TestVideoSink::doCalculation(std::shared_ptr<img::ImageContainer> img)
+void TestVideoSink::doCalculation(std::shared_ptr<img::IImageContainer> img)
 {
     LOG(logging::CONFIG, "Received image from pipeline");
     this->m_frameNumber = img->getFrameNumber();

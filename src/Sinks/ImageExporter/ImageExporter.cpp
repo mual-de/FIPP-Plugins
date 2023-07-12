@@ -2,10 +2,10 @@
 #include <FIPP/Logging/ILogging.hpp>
 using namespace FIPP;
 using namespace FIPP::plugins;
-#include <FIPP/ImageContainer/ImageFormat.hpp>
 #include <opencv2/opencv.hpp>
 #include <opencv2/cudaimgproc.hpp>
-#include <FIPP/ImageContainer/ImageContainerCUDA.hpp>
+#include <FIPP/ImageContainer/IImageContainerCUDA.hpp>
+#include <FIPP/ImageContainer/IImageContainer.hpp>
 #include <FIPP/ImageContainer/ImageFormat.hpp>
 
 ImageExporter::ImageExporter(YAML::Node config, int elemId, std::shared_ptr<FIPP::logging::ILogger> log) : GenericSinkSi(config["name"].as<std::string>(), elemId, log)
@@ -46,7 +46,7 @@ void ImageExporter::initializeInterfaces()
     LOG(logging::CONFIG, "Initialize uneeded interfaces!");
 }
 
-void ImageExporter::exportGpuImages(std::shared_ptr<img::ImageContainer> img)
+void ImageExporter::exportGpuImages(std::shared_ptr<img::IImageContainer> img)
 {
 
     if (img->getBackendFlags() == img::BackendFlags::UNIFIED_MEMORY || img->getBackendFlags() == img::BackendFlags::ZERO_COPY)
@@ -55,7 +55,7 @@ void ImageExporter::exportGpuImages(std::shared_ptr<img::ImageContainer> img)
     }
     else
     {
-        std::shared_ptr<img::ImageContainerCUDA> imgCuda = std::static_pointer_cast<img::ImageContainerCUDA>(img);
+        std::shared_ptr<img::IImageContainerCUDA> imgCuda = std::dynamic_pointer_cast<img::IImageContainerCUDA>(img);
         img::ImageFormat fmt = img->getImgFormat();
         FIPP::Point<unsigned int> dims = img->getDims();
         if (fmt.imgType == img::ImageType::GRAY)
@@ -113,7 +113,7 @@ void ImageExporter::exportGpuImages(std::shared_ptr<img::ImageContainer> img)
     }
 }
 
-void ImageExporter::exportCpuImages(std::shared_ptr<img::ImageContainer> img)
+void ImageExporter::exportCpuImages(std::shared_ptr<img::IImageContainer> img)
 {
     img::ImageFormat fmt = img->getImgFormat();
     FIPP::Point<unsigned int> dims = img->getDims();
@@ -162,7 +162,7 @@ void ImageExporter::exportCpuImages(std::shared_ptr<img::ImageContainer> img)
     }
 }
 
-void ImageExporter::doCalculation(std::shared_ptr<img::ImageContainer> img)
+void ImageExporter::doCalculation(std::shared_ptr<img::IImageContainer> img)
 {
     LOG(logging::CONFIG, "Received image from pipeline");
     this->m_frameNumber = img->getFrameNumber();

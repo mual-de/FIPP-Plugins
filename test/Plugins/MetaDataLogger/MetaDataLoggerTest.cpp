@@ -6,8 +6,9 @@
 #include "Logging/UnitTestLogger.hpp"
 #include "Logging/TestLogger.hpp"
 #include "Point.hpp"
-#include "ImageContainer/ImageContainer.hpp"
-#include "ImageContainer/ImageContainerCPU.hpp"
+#include "ImageContainer/IImageContainer.hpp"
+#include "ImageContainer/IImagePool.hpp"
+#include "ImageContainer/ImagePoolFactory.hpp"
 #include "ImageContainer/ImageFormat.hpp"
 #include <iostream>
 #include <chrono>
@@ -29,22 +30,19 @@ TEST(Creation, bounding)
 {
     // Expect equality.
     Point<unsigned int> size(10, 10);
-    img::ImageFormat format;
-    format.bitDepthPerPixel=8;
-    format.bytesPerPixel = 1;
-    format.imgType = img::ImageType::GRAY;
+    img::ImageContainerConfig config;
+    config.backend.type = img::BackendType::CPU;
+    config.dimensions = size;
+    config.imgFormat.bitDepthPerPixel=8;
+    config.imgFormat.bytesPerPixel = 1;
+    config.imgFormat.imgType = img::ImageType::GRAY;
+    std::unique_ptr<img::IImagePool> pPool = img::getImagePool(1, config);
+    std::shared_ptr<img::IImageContainer> pImg = pPool->getNextFreeImage();
     YAML::Node node = YAML::Load("[1, 2, 3]");
-    std::shared_ptr<img::ImageContainer> pImg = std::make_shared<img::ImageContainerCPU>(size, format,0);
     std::shared_ptr<logging::ILogger> log = std::make_shared<logging::UnitTestLogger>(logging::LogLevel::INFO);
     std::shared_ptr<pipe::IGenericPlugin> pe = std::make_shared<plugins::MetaDataLogger>(node, 1, log);
     pe->connectPredecessor(0);
     std::cout << "connected predecessor" << std::endl;
-    img::ImageContainerConfig conf;
-    conf.imgFormat = format;
-    img::Backend back;
-    back.flags = img::BackendFlags::CPU_ONLY;
-    back.type = img::BackendType::CPU;
-    conf.backend = back;
     bool res = pe->startElement(0);
     while(pe->getState() != pipe::ElementState::RUNNING){};
     pe->addImageToInputPipe(pImg);

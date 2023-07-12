@@ -15,7 +15,7 @@ namespace FIPP
                 MetaDataLogger(YAML::Node config, int elemId, std::shared_ptr<FIPP::logging::ILogger> log);
                 ~MetaDataLogger();
             protected:
-                std::shared_ptr<img::ImageContainer> doCalculation(std::shared_ptr<img::ImageContainer> img);
+                std::shared_ptr<img::IImageContainer> doCalculation(std::shared_ptr<img::IImageContainer> img);
         };
 
     }

@@ -13,7 +13,7 @@
 #include <dlfcn.h>
 #include <FIPP/PipelineElements/IGenericPipelineElement.hpp>
 #include <FIPP/Logging/ILogging.hpp>
-#include <FIPP/Point/Point.hpp>
+#include <FIPP/Point.hpp>
 #include <yaml-cpp/yaml.h>
 using namespace std;
 namespace fs = filesystem;

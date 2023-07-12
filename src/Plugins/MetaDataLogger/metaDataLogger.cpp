@@ -1,4 +1,5 @@
 #include "MetaDataLogger.hpp"
+#include <FIPP/ImageContainer/IImageContainer.hpp>
 #include <string.h>
 using namespace FIPP;
 using namespace FIPP::plugins;
@@ -16,7 +17,7 @@ MetaDataLogger::~MetaDataLogger(){
     LOG(LogLevel::INFO, "Plugin shutdown");
 }
 
-std::shared_ptr<img::ImageContainer> MetaDataLogger::doCalculation(std::shared_ptr<img::ImageContainer> img){
+std::shared_ptr<img::IImageContainer> MetaDataLogger::doCalculation(std::shared_ptr<img::IImageContainer> img){
     LOG(LogLevel::INFO, "Dims: " + img->getDims().asStr());
     LOG(LogLevel::INFO, "BackendType: " + std::to_string(img->getBackendType()));
     return img;

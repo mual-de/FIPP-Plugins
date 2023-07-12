@@ -12,7 +12,7 @@
 #define __TEST_VIDEO_SRC_HPP__
 
 #include <FIPP/PipelineElements/GenericSource.hpp>
-#include <FIPP/ImageContainer/ImageContainer.hpp>
+#include <FIPP/ImageContainer/IImageContainer.hpp>
 #include <yaml-cpp/yaml.h>
 #include <opencv2/opencv.hpp>
 namespace FIPP
@@ -25,7 +25,7 @@ namespace FIPP
             TestVideoSrc(YAML::Node config, int elemId, std::shared_ptr<FIPP::logging::ILogger> log);
 
         private:
-            void doCalculation(std::shared_ptr<FIPP::img::ImageContainer> img);
+            void doCalculation(std::shared_ptr<FIPP::img::IImageContainer> img);
             void initializeInterfaces();
             void closeInterfaces();
             void createInitialPattern();
@@ -34,7 +34,6 @@ namespace FIPP
             void createInitialPatternRGBA();
             void createTestPatternRGB();
             void createTestPatternGray();
-            FIPP::img::ImageContainerConfig m_imgConfig;
             int m_radius;
             /**
              * @brief Image center point
